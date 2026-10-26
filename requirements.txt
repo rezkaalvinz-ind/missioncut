@@ -1,0 +1,6 @@
+fastapi==0.159.1
+networkx==3.7
+pydantic==2.14.1
+uvicorn==0.54.0
+pytest==9.1.1
+ruff==0.14.4

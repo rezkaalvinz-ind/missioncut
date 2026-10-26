@@ -1,0 +1,19 @@
+{
+  "directed": true,
+  "allow_parallel_edges": true,
+  "nodes": [
+    {"id":"suspect","label":"Suspected workstation","asset_type":"endpoint","criticality":"low"},
+    {"id":"jump","label":"Admin jump host","asset_type":"server","criticality":"high"},
+    {"id":"api","label":"Customer API","asset_type":"service","criticality":"critical"},
+    {"id":"db","label":"Customer database","asset_type":"database","criticality":"critical"},
+    {"id":"backup","label":"Read replica","asset_type":"database","criticality":"critical"}
+  ],
+  "edges": [
+    {"id":"e1","source":"suspect","target":"jump","status":"active","change_cost":2},
+    {"id":"e2","source":"suspect","target":"api","status":"active","change_cost":3},
+    {"id":"e3","source":"jump","target":"api","status":"active","change_cost":1},
+    {"id":"e4","source":"api","target":"db","status":"active","change_cost":1},
+    {"id":"e5","source":"backup","target":"db","status":"active","change_cost":1},
+    {"id":"e6","source":"jump","target":"backup","status":"blocked","change_cost":1}
+  ]
+}

@@ -1,0 +1,12 @@
+record_type,id,label,asset_type,criticality,source,target,status,change_cost
+node,suspect,Suspected workstation,endpoint,low,,,,
+node,jump,Admin jump host,server,high,,,,
+node,api,Customer API,service,critical,,,,
+node,db,Customer database,database,critical,,,,
+node,backup,Read replica,database,critical,,,,
+edge,e1,,,,suspect,jump,active,2
+edge,e2,,,,suspect,api,active,3
+edge,e3,,,,jump,api,active,1
+edge,e4,,,,api,db,active,1
+edge,e5,,,,backup,db,active,1
+edge,e6,,,,jump,backup,blocked,1
