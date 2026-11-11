@@ -89,7 +89,9 @@ export default function Home() {
       if (!response.ok) throw new Error(data?.error?.message || data?.detail || "Authentication failed");
       window.localStorage.setItem("missioncut_token", data.token);
       setCurrentUser(data.user); setAuthStep("app"); setAuthPassword("");
-    } catch (error) { setAuthError(error instanceof Error ? error.message : "Authentication failed"); }
+    } catch (error) {
+      setAuthError(error instanceof TypeError ? `Could not connect to MissionCut API at ${API}. Check the backend deployment and CORS settings.` : error instanceof Error ? error.message : "Authentication failed");
+    }
     finally { setAuthBusy(false); }
   }
 
