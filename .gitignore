@@ -24,8 +24,9 @@ coverage.xml
 .work/
 *.tsbuildinfo
 
-.work/
-*.tsbuildinfo
+.vercel/
+build/
+*.egg-info/
 
 .venv-broken/
 outputs/

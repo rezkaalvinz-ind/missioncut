@@ -39,6 +39,28 @@ npm run dev
 
 Open `http://localhost:3000`. The API is at `http://localhost:8000`; OpenAPI docs are at `http://localhost:8000/docs`. Set `NEXT_PUBLIC_API_URL` before starting Next.js when the API uses another address.
 
+## Deploy to Vercel
+
+The root `vercel.json` uses [Vercel Services](https://vercel.com/docs/services) to deploy both parts of the repository as one project, so the web app and the API share a single domain:
+
+- `web` builds `frontend/` with the Next.js preset and serves `/`.
+- `api` builds the FastAPI app at `backend.main:app` and serves `/api/*`.
+
+Import the repository at [vercel.com/new](https://vercel.com/new) with the project root set to the repository root, or deploy from the CLI:
+
+```bash
+npx vercel link
+npx vercel --prod
+```
+
+`NEXT_PUBLIC_API_URL` is not required in production: with the two services on one origin, the browser calls `/api/*` on the deployment's own domain (no CORS configuration needed). Set it only when the API lives on another host. Configure these environment variables for the deployment:
+
+- `DATABASE_URL` — PostgreSQL connection string used by the auth endpoints.
+- `MISSIONCUT_AUTH_SECRET` — random string of at least 32 characters used to sign session tokens.
+- `MISSIONCUT_CORS_ORIGINS` — only when the API is served from a different origin than the web app.
+
+Without `DATABASE_URL` and `MISSIONCUT_AUTH_SECRET`, graph analysis, scenario comparison, and reports still work; the auth endpoints return `503` and `/api/health` reports `auth_database: "unavailable"`. If you would rather deploy two separate projects, the same repository works unmodified: set the frontend project's root directory to `frontend/` with `NEXT_PUBLIC_API_URL` pointing at the backend project, and add that frontend origin to `MISSIONCUT_CORS_ORIGINS` on the backend.
+
 ## Demo and independent expected result
 
 Select **Load demo**, then **Configure scenarios** and **Compare containment options**. The synthetic topology has two node-simple paths from the suspected workstation to the customer API: direct and through the jump host. Full isolation blocks both links touching the workstation, so those routes fall from 2 to 0. The two blocked connections have explicit costs 2 and 3 (sum 5). It also makes the API and database unreachable from that source; the read replica was already unreachable because its jump-host connection is blocked. These values are manually derived and asserted in tests.

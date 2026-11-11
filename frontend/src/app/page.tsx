@@ -11,7 +11,9 @@ type Evaluation = { scenario: Scenario; blocked_connection_count: number; change
 type Demo = { graph: Graph; scenarios: Scenario[]; expected_independent_result: Record<string, unknown> };
 type Compare = { results: Evaluation[]; recommendation: { scenario_ids: string[]; tie: boolean; criteria: string[]; trade_off: string; limitations: string } };
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+// Production builds talk to the API on the same origin (Vercel routes /api to the FastAPI service).
+// Local development falls back to the standalone API server unless NEXT_PUBLIC_API_URL is set.
+const API = process.env.NEXT_PUBLIC_API_URL ?? (process.env.NODE_ENV === "production" ? "" : "http://localhost:8000");
 
 function icon(type: string) { return ({ endpoint: "[ ]", server: "[=]", database: "[#]", service: "<> ", identity: "O", network: "@", cloud: "~" } as Record<string, string>)[type] || "*"; }
 function nodeLabel(graph: Graph | undefined, id: string) { return graph?.nodes.find((n) => n.id === id)?.label || id; }
@@ -65,7 +67,7 @@ export default function Home() {
       const data: Demo = await response.json(); setDemo(data); setComparison(null);
     } catch (e) {
       const detail = e instanceof DOMException && e.name === "TimeoutError" ? "The API did not respond within 10 seconds." : e instanceof Error ? e.message : "";
-      setError(`Could not reach MissionCut API at ${API}. Start the backend and reload the demo. ${detail}`);
+      setError(`Could not reach the MissionCut API at ${API || "this deployment"}. ${detail}`);
     } finally { setBusy(false); }
   }, []);
   useEffect(() => { void loadDemo(); }, [loadDemo]);
