@@ -46,3 +46,25 @@
 /* Profile and settings views */
 .account-view{padding-top:16px}.account-panel{width:min(760px,100%);margin:0 auto;padding:28px}.account-panel h2{margin:7px 0 0;font-size:24px;letter-spacing:-.8px}.account-identity{display:flex;align-items:center;gap:14px;margin:26px 0;padding:16px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.05)}.account-identity>div:last-child{display:flex;flex-direction:column;gap:5px}.account-identity strong{font-size:14px}.account-identity span{color:var(--muted);font-size:11px}.profile-avatar.large{width:48px;height:48px;font-size:16px}.account-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 25px}.account-details>div{min-width:0;padding:14px;border:1px solid rgba(255,255,255,.1);border-radius:9px;background:rgba(0,0,0,.18)}.account-details dt{margin-bottom:7px;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.08em}.account-details dd{margin:0;overflow:hidden;color:rgba(255,255,255,.85);font-size:11px;text-overflow:ellipsis;white-space:nowrap}.setting-row{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 0;border-bottom:1px solid rgba(255,255,255,.1);cursor:default}.setting-row>span{display:flex;min-width:0;flex-direction:column;gap:5px}.setting-row strong{font-size:12px}.setting-row small{color:var(--muted);font-size:10px;line-height:1.45}.setting-row input[type=checkbox]{position:relative;width:40px;height:22px;flex:none;appearance:none;border:1px solid rgba(255,255,255,.3);border-radius:99px;background:rgba(255,255,255,.12);cursor:pointer;transition:background .2s ease,border-color .2s ease}.setting-row input[type=checkbox]::after{content:"";position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s ease}.setting-row input[type=checkbox]:checked{border-color:var(--cyan);background:var(--cyan)}.setting-row input[type=checkbox]:checked::after{transform:translateX(18px);background:#071113}.settings-note{margin-top:24px;padding:15px;border:1px solid rgba(146,228,223,.2);border-radius:9px;background:rgba(146,228,223,.06)}.settings-note p{margin:8px 0 0;color:var(--muted);font-size:10px;line-height:1.55}
 @media(max-width:640px){.account-panel{padding:20px 16px}.account-details{grid-template-columns:1fr}.account-identity{margin-top:20px}.setting-row{align-items:flex-start}.setting-row input[type=checkbox]{margin-top:2px}}
+
+/* Restored auth screen layout — the branding pass dropped the structural rules and kept
+   only color overrides, leaving the sign-in card in normal flow at the page's top-left. */
+.auth-screen{position:fixed;inset:0;z-index:90;display:grid;place-items:center;overflow-y:auto;padding:24px 0;background:rgba(3,3,10,.32);backdrop-filter:blur(8px);opacity:1;visibility:visible;transition:opacity .5s ease,visibility .5s ease}
+.auth-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.auth-card{width:min(410px,calc(100% - 30px));padding:30px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:rgba(8,8,14,.72);box-shadow:0 22px 80px rgba(0,0,0,.38);backdrop-filter:blur(18px)}
+.auth-card-brand{display:flex;align-items:center;justify-content:center}
+.auth-card h2{margin:9px 0 7px;font-size:25px;letter-spacing:-1px}
+.auth-card>p{margin:0 0 22px;color:rgba(255,255,255,.5);font-size:11px;line-height:1.5}
+.auth-kicker{margin-top:25px;color:rgba(255,255,255,.45);font:9px monospace;letter-spacing:.14em}
+.auth-card form{display:flex;flex-direction:column;gap:13px}
+.auth-card label{display:flex;flex-direction:column;gap:6px;color:rgba(255,255,255,.6);font-size:10px}
+.auth-card input{height:41px;padding:0 12px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(0,0,0,.28);color:#fff;font-size:12px}
+.auth-card input::placeholder{color:rgba(255,255,255,.3)}
+.auth-card input:focus{border-color:#fff;outline:none;box-shadow:0 0 0 3px rgba(255,255,255,.1)}
+.auth-error{padding:9px 10px;border:1px solid rgba(255,160,125,.4);border-radius:7px;background:rgba(83,29,34,.5);color:#ffd0c0;font-size:10px;line-height:1.4}
+.auth-submit{width:100%;height:42px;justify-content:space-between;margin-top:3px}
+.auth-switch{display:flex;justify-content:center;gap:5px;margin-top:18px;color:rgba(255,255,255,.38);font-size:10px}
+.auth-switch button{border:0;background:none;color:var(--cyan);cursor:pointer;font-size:10px}
+.auth-note{display:block;margin-top:18px;color:rgba(255,255,255,.34);font-size:9px;line-height:1.45;text-align:center}
+@media(max-height:680px){.auth-screen{align-items:start}}
+@media(max-width:640px){.auth-card{padding:24px 20px}}
